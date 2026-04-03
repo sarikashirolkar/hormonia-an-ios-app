@@ -3,6 +3,7 @@ import {
   View, Text, TouchableOpacity, ScrollView, Image,
   StyleSheet, Dimensions, Animated,
 } from 'react-native';
+import { BlurView } from 'expo-blur';
 import { Colors, Radius, Shadows, Spacing } from '../../theme/tokens';
 import { QUESTIONS, analyzePCOS } from '../../utils/pcosEngine';
 import { KEYS, setData } from '../../storage/storage';
@@ -105,10 +106,10 @@ export default function OnboardingScreen({ onComplete }) {
               { emoji: '👟', text: 'Daily step tracking' },
               { emoji: '📝', text: 'Mental health journaling' },
             ].map((f, i) => (
-              <View key={i} style={styles.featureRow}>
+              <BlurView tint="light" intensity={60} key={i} style={styles.featureRowGlass}>
                 <Text style={{ fontSize: 20 }}>{f.emoji}</Text>
                 <Text style={styles.featureText}>{f.text}</Text>
-              </View>
+              </BlurView>
             ))}
           </View>
 
@@ -120,7 +121,7 @@ export default function OnboardingScreen({ onComplete }) {
             <Text style={styles.primaryBtnText}>Let's Get Started 🌸</Text>
           </TouchableOpacity>
 
-          <Text style={styles.disclaimer}>
+          <Text style={styles.disclaimerGlass}>
             ⚕️ This app provides wellness insights, not medical diagnoses.{'\n'}
             Always consult your healthcare provider.
           </Text>
@@ -326,20 +327,26 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 22,
     marginBottom: 28,
+    textShadowColor: 'rgba(255, 255, 255, 0.8)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
+    fontWeight: '600',
   },
   featureList: {
     width: '100%',
     gap: 10,
     marginBottom: 28,
   },
-  featureRow: {
+  featureRowGlass: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
-    backgroundColor: Colors.cardBg,
+    backgroundColor: 'rgba(255, 255, 255, 0.45)',
+    borderColor: 'rgba(255, 255, 255, 0.65)',
+    borderWidth: 1.5,
     padding: 14,
     borderRadius: Radius.md,
-    ...Shadows.sm,
+    overflow: 'hidden',
   },
   featureText: {
     fontSize: 14,
@@ -362,12 +369,16 @@ const styles = StyleSheet.create({
   btnDisabled: {
     opacity: 0.4,
   },
-  disclaimer: {
+  disclaimerGlass: {
     fontSize: 11,
-    color: Colors.textMuted,
+    color: Colors.textPrimary, // better contrast against bg
     textAlign: 'center',
     marginTop: 16,
     lineHeight: 16,
+    textShadowColor: 'rgba(255, 255, 255, 0.8)',
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
+    fontWeight: '600',
   },
   // Question Screen
   questionHeader: {
