@@ -5,7 +5,7 @@ export default function AnimatedBackground({ children }) {
   return (
     <View style={styles.container}>
       <Image
-        source={require('../../assets/bg.jpeg')}
+        source={require('../../assets/bg.png')}
         style={StyleSheet.absoluteFillObject}
         resizeMode="cover"
       />
