@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { Colors, Shadows } from '../theme/tokens';
 import PeriodsScreen from '../screens/Periods/PeriodsScreen';
 import FoodScreen from '../screens/Food/FoodScreen';
@@ -39,8 +39,7 @@ export default function TabNavigator() {
         headerShown: true,
         headerTitle: () => (
           <View style={styles.headerTitle}>
-            <Text style={styles.headerLogo}>hormonia</Text>
-            <Text style={{ fontSize: 14 }}>🌸</Text>
+            <Image source={require('../../assets/logo.png')} style={{ width: 100, height: 35 }} resizeMode="contain" />
           </View>
         ),
         headerRight: () => (
