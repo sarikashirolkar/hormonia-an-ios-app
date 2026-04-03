@@ -130,12 +130,14 @@ export default function AnimatedBackground({ children }) {
         />
       </Animated.View>
 
-      {/* Floating Flowers Layer */}
+      {/* Floating Flowers Layer (Removed for now) */}
+      {/* 
       <View style={StyleSheet.absoluteFillObject} pointerEvents="none">
         {particles.map((p) => (
           <FloatingFlower key={p.id} image={p.image} index={p.id} />
         ))}
       </View>
+      */}
 
       {/* Main Content goes on top */}
       <View style={styles.contentOverlay}>
