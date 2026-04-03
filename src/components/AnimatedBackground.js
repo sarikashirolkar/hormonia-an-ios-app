@@ -7,7 +7,7 @@ export default function AnimatedBackground({ children }) {
       <Image
         source={require('../../assets/bg.png')}
         style={StyleSheet.absoluteFillObject}
-        resizeMode="cover"
+        resizeMode="stretch"
       />
       {/* Main Content goes on top */}
       <View style={styles.contentOverlay}>
