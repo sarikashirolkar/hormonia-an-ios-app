@@ -1,6 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { View, Text, StyleSheet, Image } from 'react-native';
+import { BlurView } from 'expo-blur';
 import { Colors, Shadows } from '../theme/tokens';
 import PeriodsScreen from '../screens/Periods/PeriodsScreen';
 import FoodScreen from '../screens/Food/FoodScreen';
@@ -35,6 +36,9 @@ export default function TabNavigator() {
           </Text>
         ),
         tabBarStyle: styles.tabBar,
+        tabBarBackground: () => (
+          <BlurView tint="light" intensity={60} style={StyleSheet.absoluteFill} />
+        ),
         tabBarItemStyle: styles.tabItem,
         headerShown: true,
         headerTitle: () => (
@@ -61,8 +65,10 @@ export default function TabNavigator() {
 
 const styles = StyleSheet.create({
   tabBar: {
-    backgroundColor: 'rgba(255,255,255,0.95)',
+    position: 'absolute',
+    backgroundColor: 'transparent',
     borderTopWidth: 0,
+    elevation: 0,
     height: 72,
     paddingBottom: 8,
     paddingTop: 6,

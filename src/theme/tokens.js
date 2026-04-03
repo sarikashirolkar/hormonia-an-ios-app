@@ -51,7 +51,7 @@ export const Colors = {
 
   // Neutrals
   white: '#FFFFFF',
-  bg: '#FFF5F7',
+  bg: 'transparent',
   cardBg: '#FFFFFF',
   cardAlt: '#FFF0F3',
   textPrimary: '#3D2C3E',

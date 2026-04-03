@@ -1,21 +1,26 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { BlurView } from 'expo-blur';
 import { Colors, Radius, Shadows, Spacing } from '../theme/tokens';
 
 export function CuteCard({ children, style, accent, onPress }) {
   const Wrapper = onPress ? TouchableOpacity : View;
+  const BlurWrapper = accent ? View : BlurView; // Don't blur solid accent cards
+
   return (
-    <Wrapper
-      onPress={onPress}
-      activeOpacity={0.85}
-      style={[
-        styles.card,
-        accent && styles.cardAccent,
-        Shadows.sm,
-        style,
-      ]}
-    >
-      {children}
+    <Wrapper onPress={onPress} activeOpacity={0.85} style={style}>
+      <BlurWrapper
+        intensity={accent ? undefined : 60}
+        tint={accent ? undefined : "light"}
+        style={[
+          styles.card,
+          accent && styles.cardAccent,
+          !accent && styles.cardGlass,
+          Shadows.sm,
+        ]}
+      >
+        {children}
+      </BlurWrapper>
     </Wrapper>
   );
 }
@@ -175,11 +180,14 @@ export function ProgressRing({ value, max, size = 140, strokeWidth = 10, color, 
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: Colors.cardBg,
     borderRadius: Radius.lg,
     padding: Spacing.lg,
-    borderWidth: 1,
-    borderColor: Colors.border,
+  },
+  cardGlass: {
+    backgroundColor: 'rgba(255, 255, 255, 0.45)', // Semi-transparent overlay
+    borderColor: 'rgba(255, 255, 255, 0.65)',     // Glass edge reflection
+    borderWidth: 1.5,
+    overflow: 'hidden', // to keep blur inside border
   },
   cardAccent: {
     backgroundColor: Colors.pink500,

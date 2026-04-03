@@ -1,11 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { StatusBar, View, ActivityIndicator, StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import TabNavigator from './src/navigation/TabNavigator';
 import OnboardingScreen from './src/screens/Onboarding/OnboardingScreen';
+import AnimatedBackground from './src/components/AnimatedBackground';
 import { KEYS, getData } from './src/storage/storage';
 import { Colors } from './src/theme/tokens';
+
+const TransparentTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: 'transparent',
+  },
+};
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -23,36 +32,42 @@ export default function App() {
 
   if (isLoading) {
     return (
-      <View style={styles.loading}>
-        <StatusBar barStyle="dark-content" backgroundColor={Colors.bg} />
-        <ActivityIndicator size="large" color={Colors.pink500} />
-      </View>
+      <AnimatedBackground>
+        <View style={styles.loading}>
+          <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
+          <ActivityIndicator size="large" color={Colors.pink500} />
+        </View>
+      </AnimatedBackground>
     );
   }
 
   if (!hasOnboarded) {
     return (
-      <SafeAreaProvider>
-        <StatusBar barStyle="dark-content" backgroundColor={Colors.bg} />
-        <OnboardingScreen onComplete={() => setHasOnboarded(true)} />
-      </SafeAreaProvider>
+      <AnimatedBackground>
+        <SafeAreaProvider>
+          <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
+          <OnboardingScreen onComplete={() => setHasOnboarded(true)} />
+        </SafeAreaProvider>
+      </AnimatedBackground>
     );
   }
 
   return (
-    <SafeAreaProvider>
-      <NavigationContainer>
-        <StatusBar barStyle="dark-content" backgroundColor={Colors.bg} />
-        <TabNavigator />
-      </NavigationContainer>
-    </SafeAreaProvider>
+    <AnimatedBackground>
+      <SafeAreaProvider>
+        <NavigationContainer theme={TransparentTheme}>
+          <StatusBar barStyle="dark-content" backgroundColor="transparent" translucent />
+          <TabNavigator />
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </AnimatedBackground>
   );
 }
 
 const styles = StyleSheet.create({
   loading: {
     flex: 1,
-    backgroundColor: Colors.bg,
+    backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',
   },
