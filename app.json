@@ -1,29 +1,39 @@
 {
   "expo": {
-    "name": "hormonia",
+    "name": "Hormonia",
     "slug": "hormonia",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
+      "image": "./assets/logo.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#FFF5F7"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "bundleIdentifier": "com.sarikashirolkar.hormonia",
+      "infoPlist": {
+        "NSHealthShareUsageDescription": "Hormonia would like to read your health data to track your steps.",
+        "NSHealthUpdateUsageDescription": "Hormonia would like to save your health data."
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/logo.png",
+        "backgroundColor": "#FFF5F7"
       },
-      "edgeToEdgeEnabled": true
+      "package": "com.sarikashirolkar.hormonia"
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
+    "plugins": [
+      "expo-font"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": ""
+      }
     }
   }
 }
