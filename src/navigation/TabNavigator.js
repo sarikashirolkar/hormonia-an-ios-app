@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { Colors, Shadows } from '../theme/tokens';
 import PeriodsScreen from '../screens/Periods/PeriodsScreen';
@@ -25,7 +25,7 @@ function TabIcon({ name, focused }) {
   );
 }
 
-export default function TabNavigator() {
+export default function TabNavigator({ onLogout }) {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -47,9 +47,14 @@ export default function TabNavigator() {
           </View>
         ),
         headerRight: () => (
-          <Text style={styles.headerDate}>
-            {new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
-          </Text>
+          <View style={styles.headerRightContainer}>
+            <Text style={styles.headerDate}>
+              {new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+            </Text>
+            <TouchableOpacity onPress={onLogout} style={styles.logoutBtn}>
+              <Text style={styles.logoutText}>Logout</Text>
+            </TouchableOpacity>
+          </View>
         ),
         headerStyle: styles.header,
         headerShadowVisible: false,
@@ -126,6 +131,22 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: Colors.textSecondary,
     fontWeight: '500',
+  },
+  headerRightContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginRight: 16,
+    gap: 12,
+  },
+  logoutBtn: {
+    backgroundColor: 'rgba(255,255,255,0.7)',
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 12,
+  },
+  logoutText: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: Colors.pink600,
   },
 });

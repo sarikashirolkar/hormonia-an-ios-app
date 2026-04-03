@@ -20,9 +20,44 @@ const KEYS = {
   DAILY_SUBMISSIONS: 'hormonia_daily_submissions',
 };
 
+// Global session state
+let currentUser = null;
+
+export const AuthSystem = {
+  // Check if someone was previously logged in
+  restoreSession: async () => {
+    try {
+      const savedUser = await AsyncStorage.getItem('hormonia_active_user');
+      if (savedUser) currentUser = savedUser;
+      return currentUser;
+    } catch {
+      return null;
+    }
+  },
+  
+  // Set active user
+  login: async (username) => {
+    try {
+      currentUser = username.toLowerCase().trim();
+      await AsyncStorage.setItem('hormonia_active_user', currentUser);
+    } catch {}
+  },
+
+  // Clear active user
+  logout: async () => {
+    try {
+      currentUser = null;
+      await AsyncStorage.removeItem('hormonia_active_user');
+    } catch {}
+  },
+
+  getCurrentUser: () => currentUser,
+};
+
 export async function getData(key) {
   try {
-    const value = await AsyncStorage.getItem(key);
+    const scope = currentUser ? `${currentUser}_` : '';
+    const value = await AsyncStorage.getItem(`${scope}${key}`);
     return value ? JSON.parse(value) : null;
   } catch {
     return null;
@@ -31,7 +66,8 @@ export async function getData(key) {
 
 export async function setData(key, value) {
   try {
-    await AsyncStorage.setItem(key, JSON.stringify(value));
+    const scope = currentUser ? `${currentUser}_` : '';
+    await AsyncStorage.setItem(`${scope}${key}`, JSON.stringify(value));
   } catch {
     // Storage unavailable
   }
@@ -39,7 +75,8 @@ export async function setData(key, value) {
 
 export async function removeData(key) {
   try {
-    await AsyncStorage.removeItem(key);
+    const scope = currentUser ? `${currentUser}_` : '';
+    await AsyncStorage.removeItem(`${scope}${key}`);
   } catch {
     // ignore
   }
